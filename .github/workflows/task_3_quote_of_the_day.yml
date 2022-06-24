@@ -3,15 +3,24 @@ name: "Quote of the day"
 on: [workflow_dispatch]
 
 jobs:
-  deployment:
+  task1:
+    name: Quote
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Stage
+      - name: Fetch quote
+        uses: fjogeleit/http-request-action@v1
+        id: getQuoteResponse
+        with:
+          url: "https://api.chucknorris.io/jokes/random"
+          method: "GET"
+      - name: Show Response
+        id: quote
+        run: |
+          echo "::set-output name=QUOTE::${{ fromJson(steps.getQuoteResponse.outputs.response).value }}"
+      - name: Fetch quote
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://ansible.io/api/v2/job_templates/84/launch/"
+          url: "https://api.chucknorris.io/jokes/random"
           method: "POST"
-          username: ${{ secrets.AWX_USER }}
-          password: ${{ secrets.AWX_PASSWORD }}
-          customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"key_1": "value_1", "key_2": "value_2"}'
+          body: |
+            { "quote": "${{ steps.quote.outputs.QUOTE }}", "accessCode": ${{ secrets.ACCESS_CODE }}" }
