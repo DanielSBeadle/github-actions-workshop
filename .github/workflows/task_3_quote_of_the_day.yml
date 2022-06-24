@@ -3,7 +3,8 @@ name: "Quote of the day"
 on: [workflow_dispatch]
 
 jobs:
-  quote:
+  task1:
+    name: Quote
     runs-on: ubuntu-latest
     steps:
       - name: Fetch quote
