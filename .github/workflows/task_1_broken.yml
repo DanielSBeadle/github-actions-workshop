@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   task1:
-    name: Setup node
+    name: Task 1 - Fix the broken workflow
     runs-on: ubuntu-latest
     defaults:
       run:
