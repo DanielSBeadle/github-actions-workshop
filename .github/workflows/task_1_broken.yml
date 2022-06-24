@@ -10,7 +10,7 @@ jobs:
       run:
         working-directory: ./example-app
     steps:
-      - uses: actions/chackout@v3
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
